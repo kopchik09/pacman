@@ -126,7 +126,12 @@ while run:
 
     for id in list(players):
         try:
-            players[id].socket.send('штукатурка'.encode())
+            if not(visible_bacteries[id]):
+                visible_bacteries[id].append('')
+                print('sad')
+            players[id].socket.send(visible_bacteries[id].encode())
+            #players[id].socket.send('asd'.encode())
+            #print(visible_bacteries[id])
         except:
             players[id].socket.close()
             del players[id]

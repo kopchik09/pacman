@@ -71,24 +71,23 @@ screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('пакман онлайн')
 run = True
 players = []
+
+def draw_bacteries(data:list[str]):
+    global cc
+    for i in data:
+        razdel = i.split()
+        x = cc[0] + int(razdel[0])
+        y = cc[1] + int(razdel[1])
+        size = int(razdel[2])
+        color = razdel[3]
+        pygame.draw.circle(screen, color, (x, y), size)
+
+        
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
 
-#       if event.type==pg.KEYDOWN:
-#           if event.key==pg.K_LEFT:
-#               x=-10
-#               y=0
-#           if event.key==pg.K_RIGHT:
-#               x=10
-#               y=0
-#           if event.key==pg.K_UP:
-#               x=0
-#               y=-10
-#           if event.key==pg.K_DOWN:
-#               x=0
-#               y=10
     if pygame.mouse.get_focused():
         pos = pygame.mouse.get_pos()
         vector = pos[0] - cc[0], pos[1] - cc[1]
@@ -105,6 +104,8 @@ while run:
     data = sock.recv(1024).decode()
     screen.fill(black)
     pygame.draw.circle(screen, color, cc, radius)
+    if data != ['']:
+        draw_bacteries(data)
     pygame.display.update()
 
 
