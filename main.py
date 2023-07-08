@@ -91,6 +91,10 @@ while run:
         user = db_session.query(Player).filter(Player.adress == addr).first()
         player = LocalPlayer(user.id, name, color, addr, new_socket)
         players[user.id] = player
+        if player.x == widht_map and player.y == height_map:
+            print('ads')
+        else:
+            pass
 
 
     except BlockingIOError:
@@ -103,6 +107,23 @@ while run:
             players[id].change_speed(data)
         except:
             pass
+    visible_bacteries = {}
+    for id in list(players):
+        visible_bacteries[id] = []
+    pairs = list(players.items())
+    for i in range(len(pairs)):
+        for j in range(i + 1, len(pairs)):
+            p1:Player = pairs[i][1]
+            p2:Player = pairs[j][1]
+            dist_x = p2.x - p1.x
+            dist_y = p2.y - p1.y
+            if abs(dist_x) <= p1.w_vision//2 + p2.size and abs(dist_y) <= p1.h_vision//2 + p2.size:
+                data = f'{round(dist_x)} {round(dist_y)} {round(p2.size)} {p2.color}'
+                visible_bacteries[p1.id].append(data)
+            if abs(dist_x) <= p2.w_vision//2 + p1.size and abs(dist_y) <= p2.h_vision//2 + p1.size:
+                data = f'{round(-dist_x)} {round(-dist_y)} {round(p1.size)} {p1.color}'
+                visible_bacteries[p2.id].append(data)
+
     for id in list(players):
         try:
             players[id].socket.send('штукатурка'.encode())
