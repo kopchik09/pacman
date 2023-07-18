@@ -8,8 +8,6 @@ black = (0, 0, 0)
 def find(vector:str):
     if vector == '':
         return ''
-    vector_split = vector.split(',')
-    #print(float(vector_split[0]), float(vector_split[1]))
     result = list(map(float, vector.split(',')))
     return result
 
@@ -44,8 +42,6 @@ class LocalPlayer:
             vector = vector[0] * self.speed_abs, vector[1] * self.speed_abs
             self.speed_x = vector[0]
             self.speed_y = vector[1]
-
-        
 
 
 global_init('db.sqlite')
@@ -123,12 +119,10 @@ while run:
             if abs(dist_x) <= p2.w_vision//2 + p1.size and abs(dist_y) <= p2.h_vision//2 + p1.size:
                 data = f'{round(-dist_x)} {round(-dist_y)} {round(p1.size)} {p1.color}'
                 visible_bacteries[p2.id].append(data)
-
+    for id in list(players):
+        visible_bacteries[id] = ','.join(visible_bacteries[id])
     for id in list(players):
         try:
-            if not(visible_bacteries[id]):
-                visible_bacteries[id].append('')
-                print('sad')
             players[id].socket.send(visible_bacteries[id].encode())
             #players[id].socket.send('asd'.encode())
             #print(visible_bacteries[id])

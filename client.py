@@ -97,11 +97,12 @@ while run:
             vector = 0, 0
         if vector != old:
             old = vector
-            message = f'{vector[0]}, {vector[1]}'
+            message = f'{vector[0]},{vector[1]}'
             sock.send(message.encode())
             
     # sock.send('лукас'.encode())
     data = sock.recv(1024).decode()
+    data = data.split(',')
     screen.fill(black)
     pygame.draw.circle(screen, color, cc, radius)
     if data != ['']:
