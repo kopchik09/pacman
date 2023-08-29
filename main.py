@@ -5,7 +5,8 @@ from data.db_session import global_init, create_session
 import pygame
 
 black = (0, 0, 0)
-def find(vector:str):
+def find(vector:str):       
+
     if vector == '':
         return ''
     result = list(map(float, vector.split(',')))
@@ -106,6 +107,7 @@ while run:
     visible_bacteries = {}
     for id in list(players):
         visible_bacteries[id] = []
+        
     pairs = list(players.items())
     for i in range(len(pairs)):
         for j in range(i + 1, len(pairs)):
