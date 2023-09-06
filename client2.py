@@ -83,7 +83,6 @@ def find(vector: str):
             return result
     return ""
 
-
 def draw_bacteries(data: list[str]):
     for num, bact in enumerate(data):
         data = bact.split(" ")  # Разбиваем по пробелам подстроку одной бактерии
